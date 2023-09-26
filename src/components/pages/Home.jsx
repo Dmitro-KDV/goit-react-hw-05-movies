@@ -1,11 +1,12 @@
 import React from 'react';
 import Notiflix from 'notiflix';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {getMovies} from '../services'
 
 const Home = () => {
   const [trending, setTrending] = useState(null);
+  const location = useLocation()
 
   useEffect(() => {
     getMovies()
@@ -32,7 +33,7 @@ const Home = () => {
       {trending && trending.map((el) => {
           return (
           <li key={el.id}>
-            <Link to={`movies/${el.id}`}>{el.title}</Link>
+            <Link to={`movies/${el.id}`} state={location}>{el.title}</Link>
           </li>
         )})}
     </div>

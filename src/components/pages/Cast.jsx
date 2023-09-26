@@ -1,7 +1,6 @@
 import React from 'react'
 import Notiflix from 'notiflix';
 import { useState, useEffect } from 'react';
-// import { Link, useParams  } from 'react-router-dom';
 import {getMoviesCast} from '../services'
 
 const url_details = 'https://image.tmdb.org/t/p/w200';
@@ -34,11 +33,11 @@ export function Cast({movieId}) {
       <div>
         {moviesCast && moviesCast.map((el) => {
           return (
-          <li key={el.id}>
+          <ul key={el.id}>
             <img src={`${url_details}${el.profile_path}`} alt={el.name}/>
             <p>{el.name}</p>
             <p>Character: {el.character}</p>
-          </li>
+          </ul>
         )})}
       </div>
     );

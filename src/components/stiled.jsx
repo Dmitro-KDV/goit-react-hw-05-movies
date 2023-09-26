@@ -16,3 +16,13 @@ export const Nav = styled.nav`
   border-bottom: 2px;
   border-color: black;
 `;
+
+export const Inform = styled.li`
+  text-decoration: underline;
+  cursor: pointer;
+  color: blue;
+`;
+
+export const Goback = styled.button`
+  margin-bottom: 20px;
+`;

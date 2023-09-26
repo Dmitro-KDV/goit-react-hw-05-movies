@@ -1,9 +1,11 @@
 import React from 'react'
 import Notiflix from 'notiflix';
 import { useState, useEffect } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import {getMoviesDetails} from '../services';
 import {Cast} from './Cast';
+import {Reviews} from './Reviews';
+import {Inform, Goback} from '../stiled';
 
 const url_details = 'https://image.tmdb.org/t/p/w300';
 
@@ -11,7 +13,8 @@ function MovieDetails() {
     const { movieId } = useParams();
     const [moviesDetails, setMoviesDetails] = useState(null);
     const [cast, setCast] = useState(false);
-    const navigate = useNavigate();
+    const [reviews, setReviews] = useState(false);
+    const location = useLocation()
 
     useEffect(() => {
         getMoviesDetails(movieId)
@@ -33,13 +36,16 @@ function MovieDetails() {
         });
     }, []);
 
-    const handleSubmit = () => {
-        navigate("/");
-    };
-    
     const openCast = () => {
       setCast(true)
+      setReviews(false)
     }
+
+    const openReviews = () => {
+      setReviews(true)
+      setCast(false)
+    }
+
 
     let genress = '';
     let today
@@ -50,14 +56,14 @@ function MovieDetails() {
               })
         today = new Date(moviesDetails.release_date)
     }
-
     return (
-        
       <div>
         {moviesDetails && 
         <div>
           <div>
-            <button type="button" onSubmit={handleSubmit}>Go back</button>
+            <Link to={location.state}>
+              <Goback type="button">Go back</Goback>
+            </Link>
           </div>
           <div>
             <img src={`${url_details}${moviesDetails.poster_path}`} alt={moviesDetails.original_title}/>
@@ -70,11 +76,16 @@ function MovieDetails() {
           </div>
           <div>
             <h5>Additional information</h5>
-            <li>
-              <Link onClick={openCast}>Cast
-                {cast && <Cast movieId={movieId}/>}
-              </Link>
-            </li>
+            <ul>
+              <Inform onClick={openCast}>Cast
+              </Inform>
+            </ul>
+            <ul>
+              <Inform onClick={openReviews}>Reviews
+              </Inform>
+            </ul>
+              {cast && <Cast movieId={movieId}/>}
+              {reviews && <Reviews movieId={movieId}/>}
           </div>
         </div>}
       </div>

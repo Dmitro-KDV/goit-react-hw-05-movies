@@ -26,11 +26,20 @@ export function getMoviesDetails(movie_id) {
   }
 
   export function getMoviesCast(movie_id) {
-    // console.log(`${url_details}${movie_id}/credits`)
     return axios.get(`${url_details}${movie_id}/credits`, {
       params: {
         api_key: api_key,
         language: 'en-US',
+      },
+    });
+  }
+
+  export function getMoviesReviews(movie_id) {
+    return axios.get(`${url_details}${movie_id}/reviews`, {
+      params: {
+        api_key: api_key,
+        language: 'en-US',
+        page: 1,
       },
     });
   }

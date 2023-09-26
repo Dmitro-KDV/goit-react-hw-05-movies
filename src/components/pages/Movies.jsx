@@ -1,21 +1,32 @@
 import React from 'react';
 import Notiflix from 'notiflix';
-import { useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import {getMoviesSearch} from '../services';
 
 const Movies = () => {
+  const [value, setValue] = useState('');
   const [searchText, setSearchText] = useState('');
   const [moviesSearch, setMoviesSearch] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation()
+  const searchT = searchParams.get('query') ?? ''
 
   const handleChange = ({ target: { value } }) => {
-    setSearchText(value.trim());
+    setValue(value.trim());
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (searchText) {
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setSearchText(value)
+    setSearchParams({query: value});
+}
+
+if (!searchText && searchT) {
+  setSearchText(searchT)
+}
+
+useEffect(() => {
       getMoviesSearch(searchText)
       .then(response => {
         if (response.data === 0) {
@@ -23,7 +34,6 @@ const Movies = () => {
             return;
         }
         setMoviesSearch(response.data.results);
-        setSearchParams({query: searchText});
         // console.log(response.data.results)
       })
       .catch(function (error) {
@@ -34,8 +44,7 @@ const Movies = () => {
       .finally(() => {
         // setIsLoading(false);
       });
-    }
-  };
+}, [searchText]);
 
   return (
     <div>
@@ -45,7 +54,7 @@ const Movies = () => {
           type="text"
           placeholder=""
           onChange={handleChange}
-          value={searchText}
+          value={value}
         />
         <button type="submit" className="SearchForm-button">
           <span className="SearchForm-button-label">Search</span>
@@ -54,7 +63,7 @@ const Movies = () => {
       {moviesSearch && moviesSearch.map((el) => {
           return (
           <li key={el.id}>
-            <Link to={`${el.id}`}>{el.title}</Link>
+            <Link to={`${el.id}`} state={location}>{el.title}</Link>
           </li>
         )})}
     </div>
