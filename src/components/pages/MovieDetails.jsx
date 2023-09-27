@@ -1,4 +1,4 @@
-import React from 'react'
+// import React, { Suspense } from 'react'
 import Notiflix from 'notiflix';
 import { useState, useEffect } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
@@ -24,17 +24,13 @@ function MovieDetails() {
               return;
           }
           setMoviesDetails(response.data);
-          // console.log(response.data)
         })
         .catch(function (error) {
           Notiflix.Notify.failure(
             'Oops! Something went wrong! Try reloading the page!'
           );
         })
-        .finally(() => {
-          // setIsLoading(false);
-        });
-    }, []);
+    }, [movieId]);
 
     const openCast = () => {
       setCast(true)

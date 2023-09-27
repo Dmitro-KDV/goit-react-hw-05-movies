@@ -1,4 +1,3 @@
-import React from 'react';
 import Notiflix from 'notiflix';
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
@@ -11,19 +10,20 @@ const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation()
   const searchT = searchParams.get('query') ?? ''
-
+  
   const handleChange = ({ target: { value } }) => {
     setValue(value.trim());
   };
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setSearchText(value)
-    setSearchParams({query: value});
+    setSearchText(value.trim())
+    setSearchParams({query: value.trim()});
 }
 
 if (!searchText && searchT) {
   setSearchText(searchT)
+  setValue(searchT);
 }
 
 useEffect(() => {
@@ -34,16 +34,12 @@ useEffect(() => {
             return;
         }
         setMoviesSearch(response.data.results);
-        // console.log(response.data.results)
       })
       .catch(function (error) {
         Notiflix.Notify.failure(
           'Oops! Something went wrong! Try reloading the page!'
         );
       })
-      .finally(() => {
-        // setIsLoading(false);
-      });
 }, [searchText]);
 
   return (

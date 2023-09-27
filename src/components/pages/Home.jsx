@@ -22,9 +22,6 @@ const Home = () => {
           'Oops! Something went wrong! Try reloading the page!'
         );
       })
-      .finally(() => {
-        // setIsLoading(false);
-      });
   }, []);
 
   return (

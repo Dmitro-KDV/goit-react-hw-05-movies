@@ -16,17 +16,13 @@ export function Cast({movieId}) {
               return;
           }
           setMoviesCast(response.data.cast);
-          // console.log(response.data.cast)
         })
         .catch(function (error) {
           Notiflix.Notify.failure(
             'Oops! Something went wrong! Try reloading the page!'
           );
         })
-        .finally(() => {
-          // setIsLoading(false);
-        });
-    }, []);
+    }, [movieId]);
 
 
     return (

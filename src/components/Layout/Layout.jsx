@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Suspense } from 'react'
+import { RotatingLines } from  'react-loader-spinner'
 import { Outlet } from "react-router-dom";
 import {StyledLink, Nav} from '../stiled';
 
@@ -10,7 +11,19 @@ function Layout() {
         <StyledLink to="/">Home</StyledLink>
         <StyledLink to="/movies">Movies</StyledLink>
       </Nav>
-      <Outlet />
+      <Suspense fallback={
+        <div className="RotatingLines">
+          <RotatingLines
+            strokeColor="green"
+            strokeWidth="5"
+            animationDuration="0.75"
+            width="96"
+            visible={true}
+          />
+        </div>
+        }>
+        <Outlet />
+      </Suspense>
     </div>
   )
 }

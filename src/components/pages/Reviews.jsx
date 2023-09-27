@@ -14,17 +14,13 @@ export function Reviews({movieId}) {
               return;
           }
           setMoviesReviews(response.data.results);
-        //   console.log(response.data.results)
         })
         .catch(function (error) {
           Notiflix.Notify.failure(
             'Oops! Something went wrong! Try reloading the page!'
           );
         })
-        .finally(() => {
-          // setIsLoading(false);
-        });
-    }, []);
+    }, [movieId]);
 
 
     return (
