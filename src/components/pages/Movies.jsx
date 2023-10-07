@@ -19,6 +19,7 @@ const Movies = () => {
     e.preventDefault()
     setSearchText(value.trim())
     setSearchParams({query: value.trim()});
+    // console.log(e.target.elements.search.value)
 }
 
 if (!searchText && searchT) {
@@ -48,6 +49,7 @@ useEffect(() => {
         <input
           className="SearchForm-input"
           type="text"
+          name='search'
           placeholder=""
           onChange={handleChange}
           value={value}
